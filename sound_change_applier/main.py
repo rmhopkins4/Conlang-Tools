@@ -1,7 +1,18 @@
 import sound_change
 
+__default_categories = {
+    "V": "aeiou",
+    "L": "āēīōū",
+    "C": "ptcqbdgmnlrhs",
+    "F": "ie",
+    "B": "ou",
+    "S": "ptc",
+    "Z": "bdg",
+    "N": "nm"
+}
 
-def apply_sound_changes(word_list: list[str], sound_changes: list[str], categories: dict[str, str], rewrite_rules: dict[str, str], **kwargs) -> list[str]:
+
+def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[str] = ["c->i/F_t"], categories: dict[str, str] = __default_categories, rewrite_rules: dict[str, str] = {}, **kwargs) -> list[str]:
     show_input = kwargs.get('show_input', False)
     rewrite_on_output = kwargs.get('rewrite_on_output', True)
     report_rules = kwargs.get('report_rules', False)
@@ -48,7 +59,7 @@ def apply_sound_changes(word_list: list[str], sound_changes: list[str], categori
                     f"{change} applies to {old_word} at {__first_different_index(old_word, word)}")
         return word
 
-    new_word_list = [f"{unwrite(__do_all_changes(word), rewrite_rules) if rewrite_on_output else __do_all_changes(word)} {f'[{unwrite(word, rewrite_rules) if rewrite_on_output else word}] ' if show_input else ''}"
+    new_word_list = [f"{unwrite(__do_all_changes(word), rewrite_rules) if rewrite_on_output else __do_all_changes(word)}{f' [{unwrite(word, rewrite_rules) if rewrite_on_output else word}] ' if show_input else ''}"
                      for word in rewritten_word_list]
 
     return new_word_list

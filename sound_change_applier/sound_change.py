@@ -35,7 +35,7 @@ def __replace_substring(input_string, target, replacement, pattern):
 
     # Use positive lookahead and lookbehind to ensure non-overlapping replacements
     pattern_regex = rf'(?<={(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
-    print(pattern_regex)
+
     # replaced by another group
     if "[" in replacement:
         if "[" not in target:
@@ -113,7 +113,7 @@ def apply(input_string: str = "lector",
 
 if __name__ == "__main__":
     # Test the function with bracketed characters in the pattern and categories
-    input_string = "be"
+    input_string = "bfe"
     sound_change = "b(f)e->d/_"
     result = apply(
         input_string, sound_change, __default_categories)
