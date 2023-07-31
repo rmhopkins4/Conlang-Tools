@@ -80,9 +80,9 @@ categories = {
     "V": "aeiou",
 }
 
-word_list = ["bebshiaby", "biet"]
+word_list = ["be", "bfe", "bce"]
 
-sound_changes = ["b->d/_e", "!front!->!back!/_"]
+sound_changes = ["b->d/_(a)e"]
 
 result = apply_sound_changes(word_list,
                              sound_changes,

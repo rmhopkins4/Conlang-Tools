@@ -35,7 +35,7 @@ def __replace_substring(input_string, target, replacement, pattern):
 
     # Use positive lookahead and lookbehind to ensure non-overlapping replacements
     pattern_regex = rf'(?<={(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
-
+    print(pattern_regex)
     # replaced by another group
     if "[" in replacement:
         if "[" not in target:
@@ -80,28 +80,21 @@ def apply(input_string: str = "lector",
             "'_' must be included after the '/'.\nEx: 'F->B/w_' is a valid sound change.")
     if not target and len(pattern) == 1:
         raise ValueError("Invalid sound change.")
+    if '(' in replacement or ')' in replacement:
+        raise ValueError("Optional phonemes are not allowed in replacement.")
 
-    # expand optional possibilities
-    def __expand_options(pattern):
-        # Helper function to expand options within parentheses in the pattern
-        if '(' not in pattern:
-            return pattern
+    # optional parts are handled by regex with (a)?
+    def __add_question_mark_after_closing_parenthesis(sentence):
+        modified_sentence = ""
+        for char in sentence:
+            if char == ')':
+                modified_sentence += char + "?"
+            else:
+                modified_sentence += char
+        return modified_sentence
 
-        # Find the first group of options enclosed in parentheses
-        match = re.search(r'\(([^()]+)\)', pattern)
-        if not match:
-            return pattern
-
-        # Expand the options for the first group when it is true and when it's not true
-        group_option = match.group(1)
-        true_scenario = __expand_options(
-            pattern.replace(match.group(), group_option, 1))
-        false_scenario = __expand_options(
-            pattern.replace(match.group(), '', 1))
-
-        return f'{true_scenario}|{false_scenario}'
-
-    pattern = __expand_options(pattern)
+    pattern = __add_question_mark_after_closing_parenthesis(pattern)
+    target = __add_question_mark_after_closing_parenthesis(target)
 
     # Replace the category symbols with their corresponding allowed characters
     for category, characters in categories.items():
@@ -120,11 +113,8 @@ def apply(input_string: str = "lector",
 
 if __name__ == "__main__":
     # Test the function with bracketed characters in the pattern and categories
-    input_string = "veniicii"
-    sound_change = "ii->i/_"
+    input_string = "be"
+    sound_change = "b(f)e->d/_"
     result = apply(
         input_string, sound_change, __default_categories)
     print(result)
-
-    # default (lector -> leitor)
-    print(apply())
