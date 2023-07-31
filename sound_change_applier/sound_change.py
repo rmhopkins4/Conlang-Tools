@@ -1,7 +1,7 @@
 import re
 
 # define categories
-default_categories = {
+__default_categories = {
     "V": "aeiou",
     "L": "āēīōū",
     "C": "ptcqbdgmnlrhs",
@@ -57,7 +57,7 @@ def __replace_substring(input_string, target, replacement, pattern):
 
 def apply(input_string: str = "lector",
           sound_shift: str = "c->i/F_t",
-          categories: dict[str, str] = default_categories) -> str:
+          categories: dict[str, str] = __default_categories) -> tuple[str, bool]:
     """Simulates a sound change on a string
 
     Args:
@@ -70,6 +70,7 @@ def apply(input_string: str = "lector",
 
     Returns:
         str: input string after undergoing the sound shift
+        bool: whether or not a change has occurred
     """
     target, remaining_spec = sound_shift.split('->')
     replacement, pattern = remaining_spec.split('/')
@@ -109,7 +110,9 @@ def apply(input_string: str = "lector",
         replacement = replacement.replace(category, f'[{characters}]')
 
     pattern = __remove_nested_brackets(pattern)
-    return __replace_substring(input_string, target=target, replacement=replacement, pattern=pattern)
+    replaced = __replace_substring(
+        input_string, target=target, replacement=replacement, pattern=pattern)
+    return replaced, replaced != input_string
 
 
 # NOTE: format of sound change is (target)->(replacement)/(environment with '_')
@@ -120,7 +123,7 @@ if __name__ == "__main__":
     input_string = "veniicii"
     sound_change = "ii->i/_"
     result = apply(
-        input_string, sound_change, default_categories)
+        input_string, sound_change, __default_categories)
     print(result)
 
     # default (lector -> leitor)
