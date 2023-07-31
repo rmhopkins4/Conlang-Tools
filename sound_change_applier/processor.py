@@ -1,17 +1,5 @@
 import re
 
-# define categories
-__default_categories = {
-    "V": "aeiou",
-    "L": "āēīōū",
-    "C": "ptcqbdgmnlrhs",
-    "F": "ie",
-    "B": "ou",
-    "S": "ptc",
-    "Z": "bdg",
-    "N": "nm"
-}
-
 
 def __remove_nested_brackets(str: str):
     output_str = ""
@@ -57,7 +45,7 @@ def __replace_substring(input_string, target, replacement, pattern):
 
 def apply_sound_change(input_string: str = "lector",
                        sound_shift: str = "c->i/F_t",
-                       categories: dict[str, str] = __default_categories) -> tuple[str, bool]:
+                       categories: dict[str, str] = {}) -> tuple[str, bool]:
     """Simulates a sound change on a string
 
     Args:
@@ -111,7 +99,21 @@ def apply_sound_change(input_string: str = "lector",
 # NOTE: format of sound change is (target)->(replacement)/(environment with '_')
 # NOTE: . is a single wildcard and .+ is an infinite length wildcard
 
+
 if __name__ == "__main__":
+
+    # define categories
+    __default_categories = {
+        "V": "aeiou",
+        "L": "āēīōū",
+        "C": "ptcqbdgmnlrhs",
+        "F": "ie",
+        "B": "ou",
+        "S": "ptc",
+        "Z": "bdg",
+        "N": "nm"
+    }
+
     # Test the function with bracketed characters in the pattern and categories
     input_string = "bfe"
     sound_change = "b(f)e->d/_"
