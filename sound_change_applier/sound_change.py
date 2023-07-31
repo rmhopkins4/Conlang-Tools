@@ -112,12 +112,13 @@ def apply(input_string: str = "lector",
     return __replace_substring(input_string, target=target, replacement=replacement, pattern=pattern)
 
 
-# NOTE: . is a single wildcard, and .+ is an infinite length wildcard
+# NOTE: format of sound change is (target)->(replacement)/(environment with '_')
+# NOTE: . is a single wildcard and .+ is an infinite length wildcard
 
 if __name__ == "__main__":
     # Test the function with bracketed characters in the pattern and categories
-    input_string = "secundo"
-    sound_change = "S->Z/V_V"
+    input_string = "veniicii"
+    sound_change = "ii->i/_"
     result = apply(
         input_string, sound_change, default_categories)
     print(result)
