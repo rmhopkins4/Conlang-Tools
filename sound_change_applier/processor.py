@@ -55,9 +55,9 @@ def __replace_substring(input_string, target, replacement, pattern):
     return result.strip('#')
 
 
-def apply(input_string: str = "lector",
-          sound_shift: str = "c->i/F_t",
-          categories: dict[str, str] = __default_categories) -> tuple[str, bool]:
+def apply_sound_change(input_string: str = "lector",
+                       sound_shift: str = "c->i/F_t",
+                       categories: dict[str, str] = __default_categories) -> tuple[str, bool]:
     """Simulates a sound change on a string
 
     Args:
@@ -115,6 +115,6 @@ if __name__ == "__main__":
     # Test the function with bracketed characters in the pattern and categories
     input_string = "bfe"
     sound_change = "b(f)e->d/_"
-    result = apply(
+    result = apply_sound_change(
         input_string, sound_change, __default_categories)
     print(result)

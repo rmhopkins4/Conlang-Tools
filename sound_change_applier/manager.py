@@ -1,4 +1,4 @@
-import sound_change
+import processor
 
 __default_categories = {
     "V": "aeiou",
@@ -51,7 +51,7 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
 
         for change in sound_changes:
             old_word = word
-            word, change_bool = sound_change.apply(
+            word, change_bool = processor.apply_sound_change(
                 word, change, categories)
             if change_bool and report_rules:
                 # location of where old_word and new_word differ
@@ -75,33 +75,3 @@ def unwrite(s: str, rewrite_rules: dict[str, str]) -> str:
     for key, value in rewrite_rules.items():
         s = s.replace(value, key)
     return s
-
-
-# user input
-
-rewrite_rules = {
-    "!front!": "F",
-    "!back!": "B",
-    "sh": "ʃ",
-}
-
-categories = {
-    "!front!": "ie",
-    "!back!": "ou",
-    "V": "aeiou",
-}
-
-word_list = ["be", "bfe", "bce"]
-
-sound_changes = ["b->d/_(a)e"]
-
-result = apply_sound_changes(word_list,
-                             sound_changes,
-                             categories,
-                             rewrite_rules,
-                             show_input=True,
-                             rewrite_on_output=True,
-                             report_rules=False,
-                             )
-for word in result:
-    print(word)
