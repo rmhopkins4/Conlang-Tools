@@ -40,35 +40,6 @@ def __replace_substring(input_string, target, replacement, pattern):
     return result.strip('#')
 
 
-def __replace_substring_from_category(input_string, target_cat, replacement_cat, pattern):
-    # get rid of brackets around input string and target_category
-    target_cat = target_cat.replace("[", "").replace("]", "")
-    replacement_cat = replacement_cat.replace("[", "").replace("]", "")
-
-    # Same as before, the function that replaces the input_string with new_string based on the pattern
-    # add '#' to front and back to handle start and end of string
-    input_string = '#' + input_string + '#'
-    pattern_prefix, pattern_suffix = pattern.split('_')
-
-    # Use positive lookahead to ensure non-overlapping replacements
-    pattern_regex = rf'{pattern_prefix}(.)(?={pattern_suffix})'
-
-    def repl(match):
-        char = match.group(1)
-        if char in target_cat:
-            idx = target_cat.index(char)
-            # different lengths
-            if len(replacement_cat) - 1 < idx:
-                return f'{pattern_prefix}{""}{pattern_suffix}'
-            return f'{pattern_prefix}{replacement_cat[idx]}{pattern_suffix}'
-        return match.group(0)
-
-    result = re.sub(pattern_regex, repl, input_string)
-
-    # remove '#' that was added to the start and end of the string
-    return result.strip('#')
-
-
 def apply_sound_change(input_string, sound_shift, categories={}):
     target, remaining_spec = sound_shift.split('->')
     replacement, pattern = remaining_spec.split('/')
@@ -103,13 +74,13 @@ def apply_sound_change(input_string, sound_shift, categories={}):
 
     pattern = __remove_nested_brackets(pattern)
     if "[" in target or "[" in replacement:
-        return __replace_substring_from_category(input_string, target_cat=target, replacement_cat=replacement, pattern=pattern)
+        return "ERROR: Category cannot be replacement if it is not target!"
     return __replace_substring(input_string, target=target, replacement=replacement, pattern=pattern)
 
 
 # Test the function with bracketed characters in the pattern and categories
-input_string = "cet"
-sound_change = "F->B/c_"
+input_string = "moky"
+sound_change = "o->k/_"
 result = apply_sound_change(
     input_string, sound_change, categories)
 print(result)
