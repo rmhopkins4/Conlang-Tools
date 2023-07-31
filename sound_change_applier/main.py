@@ -35,16 +35,19 @@ def __replace_substring(input_string, target, replacement, pattern):
     # Use positive lookahead to ensure non-overlapping replacements
     pattern_regex = rf'({(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
 
-    print(pattern_regex)
-
     # replaced by another group
-    if "]" in replacement:
-        replacement_list = re.findall(r'\[.*?\]', replacement)
+    if "[" in replacement:
+        if "[" not in target:
+            raise ValueError(
+                "Replace element with category")
+            result = re.sub(pattern_regex, rf'\1{replacement}', input_string)
+        else:
+            replacement_list = re.findall(r'\[.*?\]|\S', replacement)
 
-        def __match_func(match):
-            return str(rf"{match.group(1)}") + "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else "" for replacement in replacement_list])
+            def __match_func(match):
+                return str(rf"{match.group(1)}") + "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else replacement if not "[" in replacement else "" for replacement in replacement_list])
 
-        result = re.sub(pattern_regex, __match_func, input_string)
+            result = re.sub(pattern_regex, __match_func, input_string)
     else:
         result = re.sub(pattern_regex, rf'\1{replacement}', input_string)
 
@@ -55,6 +58,12 @@ def __replace_substring(input_string, target, replacement, pattern):
 def apply_sound_change(input_string, sound_shift, categories={}):
     target, remaining_spec = sound_shift.split('->')
     replacement, pattern = remaining_spec.split('/')
+
+    if not "_" in pattern:
+        raise ValueError(
+            "'_' must be included after the '/'.\nEx: 'F->B/w_' is a valid sound change.")
+    if not target and len(pattern) == 1:
+        raise ValueError("Invalid sound change.")
 
     # expand optional possibilities
     def __expand_options(pattern):
@@ -89,13 +98,12 @@ def apply_sound_change(input_string, sound_shift, categories={}):
 
 
 # Test the function with bracketed characters in the pattern and categories
-input_string = "monkey"
-sound_change = "B->BB/_"
-result = apply_sound_change(
-    input_string, sound_change, categories)
-print(result)
-
+input_string = "aa"
+sound_change = "a->/_"
+try:
+    result = apply_sound_change(
+        input_string, sound_change, categories)
+    print(result)
+except Exception as e:
+    print("Error has been found:", e)
 # NOTE: . is a single wildcard, and .+ is an infinite length wildcard
-
-sound_change = "k->j/_C(C)F"
-# _[ptcqbdgmnlrhs][ie]|[ptcqbdgmnlrhs][ptcqbdgmnlrhs][ie]
