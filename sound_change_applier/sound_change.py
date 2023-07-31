@@ -1,9 +1,10 @@
 import re
 
 # define categories
-categories = {
+default_categories = {
     "V": "aeiou",
-    "C": "ptcqbdgdfmnlrhs",
+    "L": "āēīōū",
+    "C": "ptcqbdgmnlrhs",
     "F": "ie",
     "B": "ou",
     "S": "ptc",
@@ -32,8 +33,8 @@ def __replace_substring(input_string, target, replacement, pattern):
 
     # handle replacement as a list
 
-    # Use positive lookahead to ensure non-overlapping replacements
-    pattern_regex = rf'({(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
+    # Use positive lookahead and lookbehind to ensure non-overlapping replacements
+    pattern_regex = rf'(?<={(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
 
     # replaced by another group
     if "[" in replacement:
@@ -45,17 +46,31 @@ def __replace_substring(input_string, target, replacement, pattern):
             replacement_list = re.findall(r'\[.*?\]|\S', replacement)
 
             def __match_func(match):
-                return str(rf"{match.group(1)}") + "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else replacement if not "[" in replacement else "" for replacement in replacement_list])
-
+                return "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else replacement if not "[" in replacement else "" for replacement in replacement_list])
             result = re.sub(pattern_regex, __match_func, input_string)
     else:
-        result = re.sub(pattern_regex, rf'\1{replacement}', input_string)
+        result = re.sub(pattern_regex, replacement, input_string)
 
     # remove '#' that was added to start and end of string
     return result.strip('#')
 
 
-def apply_sound_change(input_string, sound_shift, categories={}):
+def apply(input_string: str = "lector",
+          sound_shift: str = "c->i/F_t",
+          categories: dict[str, str] = default_categories) -> str:
+    """Simulates a sound change on a string
+
+    Args:
+        input_string (str): Word/morpheme undergoing the sound change
+        sound_shift (str): Sound change written in format: (target)->(replacement)_/#_#
+        categories (dict, optional): Categories act like variables. They can be used in any position of the sound change. Defaults to {}.
+
+    Raises:
+        ValueError: Sound change is invalid
+
+    Returns:
+        str: input string after undergoing the sound shift
+    """
     target, remaining_spec = sound_shift.split('->')
     replacement, pattern = remaining_spec.split('/')
 
@@ -97,13 +112,15 @@ def apply_sound_change(input_string, sound_shift, categories={}):
     return __replace_substring(input_string, target=target, replacement=replacement, pattern=pattern)
 
 
-# Test the function with bracketed characters in the pattern and categories
-input_string = "aa"
-sound_change = "a->/_"
-try:
-    result = apply_sound_change(
-        input_string, sound_change, categories)
-    print(result)
-except Exception as e:
-    print("Error has been found:", e)
 # NOTE: . is a single wildcard, and .+ is an infinite length wildcard
+
+if __name__ == "__main__":
+    # Test the function with bracketed characters in the pattern and categories
+    input_string = "secundo"
+    sound_change = "S->Z/V_V"
+    result = apply(
+        input_string, sound_change, default_categories)
+    print(result)
+
+    # default (lector -> leitor)
+    print(apply())
