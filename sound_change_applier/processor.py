@@ -15,11 +15,11 @@ def __remove_nested_brackets(str: str):
 
 
 def __replace_substring(input_string, target, replacement, pattern):
+    change_indices = []
+
     # Same as before, the function that replaces the original_string with new_string based on the pattern
     # add '#' to front and back to handle start and end of string
     input_string = '#' + input_string + '#'
-
-    # handle replacement as a list
 
     # Use positive lookahead and lookbehind to ensure non-overlapping replacements
     pattern_regex = rf'(?<={(pattern.split("_")[0])}){target}(?={(pattern.split("_")[1])})'
@@ -34,17 +34,17 @@ def __replace_substring(input_string, target, replacement, pattern):
             replacement_list = re.findall(r'\[.*?\]|\S', replacement)
 
             def __match_func(match):
-                print(match)
+                change_indices.append(match.span()[0] - 1)
                 return "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else replacement if not "[" in replacement else "" for replacement in replacement_list])
             result = re.sub(pattern_regex, __match_func, input_string)
     else:
         def __match_func(match):
-            print(match)
+            change_indices.append(match.span()[0] - 1)
             return replacement
-        result = re.sub(pattern_regex, replacement, input_string)
+        result = re.sub(pattern_regex, __match_func, input_string)
 
     # remove '#' that was added to start and end of string
-    return result.strip('#')
+    return result.strip('#'), change_indices
 
 
 def apply_sound_change(input_string: str = "lector",
@@ -97,9 +97,9 @@ def apply_sound_change(input_string: str = "lector",
     pattern = __remove_nested_brackets(pattern)
 
     # do replacement
-    replaced = __replace_substring(
+    replaced, change_indices = __replace_substring(
         input_string, target=target, replacement=replacement, pattern=pattern)
-    return replaced, replaced != input_string
+    return replaced, change_indices
 
 
 # NOTE: format of sound change is (target)->(replacement)/(environment with '_')
@@ -121,8 +121,8 @@ if __name__ == "__main__":
     }
 
     # Test the function with bracketed characters in the pattern and categories
-    input_string = "bfe"
-    sound_change = "b(f)e->d/_"
+    input_string = "bbb"
+    sound_change = "b->d/_"
     result = apply_sound_change(
         input_string, sound_change, __default_categories)
     print(result)

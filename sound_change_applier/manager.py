@@ -33,33 +33,14 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
                            for word in word_list]
 
     def __do_all_changes(word: str) -> str:
-        def __first_different_index(old: str, new: str) -> int:
-            """Helper method to locate where a shift is made in a word
-
-            Args:
-                old (str): word before change
-                new (str): word after change
-
-            Returns:
-                int: first index in old word where new word differs
-            """
-            min_len = min(len(old), len(new))
-
-            for i in range(min_len):
-                if old[i] != new[i]:
-                    return i
-
-            # If one string is a prefix of the other, return the length of the shorter string
-            return min_len
-
         for change in sound_changes:
             old_word = word
-            word, change_bool = processor.apply_sound_change(
+            word, change_indices = processor.apply_sound_change(
                 word, change, categories)
-            if change_bool and report_rules:
+            if len(change_indices) > 0 and report_rules:
                 # location of where old_word and new_word differ
                 output.append(
-                    f"{change} applies to {old_word} at {__first_different_index(old_word, word)}")
+                    f"{change} applies to {old_word} at {change_indices}")
         return word
 
     new_word_list = [f"{unwrite(__do_all_changes(word), rewrite_rules) if rewrite_on_output else __do_all_changes(word)}{f' [{unwrite(word, rewrite_rules) if rewrite_on_output else word}] ' if show_input else ''}"
