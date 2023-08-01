@@ -1,3 +1,5 @@
+# Example input! Study this to make sure you understand the input format when using the console_app.
+
 # lines starting with '#' are comments
 # whitespace is ignored
 
@@ -36,7 +38,7 @@ Z=bdg
 lh//lj
 
 
-# lines with neither -> nor = nor // are words
+# lines with neither -> nor = nor // are interpreted as words in the input lexicon
 
 lector
 doctor
@@ -51,8 +53,8 @@ fīliam
 pōntem
 
 
-# lines beginning with * are interpreted as **kwargs
-# these are all of the keyword arguments that have so far been implemented
+# lines beginning with * are interpreted as keyword arguments, and act as options
+# there may be more implemented down the line, but these four seem fairly important and good
 # if nothing is input, the default values will be used. 
 # if False is misspelled, it will default to True! Be wary of that.
 # quotes are optional for value of *write_to_file, it's up to you whether or not to use them.
