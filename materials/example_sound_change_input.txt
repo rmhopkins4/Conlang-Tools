@@ -49,7 +49,7 @@ pōntem
 # also, if False is misspelled, it will default to True! Be wary of that.
 *show_input=True
 *rewrite_on_output=True
-*report_rules=True
+*report_rules=False
 # below works with or without the quotes, whichever you prefer
 *write_to_file="./materials/example_sound_change_output.txt"
 

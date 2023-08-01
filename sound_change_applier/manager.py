@@ -46,9 +46,10 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
     new_word_list = [f"{unwrite(__do_all_changes(word), rewrite_rules) if rewrite_on_output else __do_all_changes(word)}{f' [{unwrite(word, rewrite_rules) if rewrite_on_output else word}] ' if show_input else ''}"
                      for word in rewritten_word_list]
 
+    output.append("--Output Lexicon--")
+    output.extend(new_word_list)
+
     if write_to_file:
-        output.append("---")
-        output.extend(new_word_list)
         try:
             with open(write_to_file, 'w', encoding='utf-8') as file:
                 file.writelines([item + '\n' for item in output])
@@ -58,7 +59,7 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
             print("File not found")
         except IOError:
             print("An error occurred while reading the file")
-    return new_word_list
+    return output
 
 
 def rewrite(s: str, rewrite_rules: dict[str, str]) -> str:

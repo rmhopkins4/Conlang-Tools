@@ -1,4 +1,3 @@
-import os
 from manager import apply_sound_changes
 
 
@@ -42,8 +41,12 @@ def parse_total_input_file(file_path: str):
     return word_list, sound_changes, categories, rewrite_rules, kwargs
 
 
+file_path = input("Input file path to read from: ")
+
+
 word_list, sound_changes, categories, rewrite_rules, kwargs = parse_total_input_file(
-    "./materials/example_sound_change_input.txt")
+    file_path)
+
 
 result = apply_sound_changes(word_list,
                              sound_changes,
@@ -51,6 +54,5 @@ result = apply_sound_changes(word_list,
                              rewrite_rules,
                              **kwargs
                              )
-print("Output: ")
 for word in result:
     print(word)
