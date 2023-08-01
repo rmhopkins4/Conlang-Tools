@@ -16,7 +16,7 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
     show_input = kwargs.get('show_input', False)
     rewrite_on_output = kwargs.get('rewrite_on_output', True)
     report_rules = kwargs.get('report_rules', False)
-    write_to_file = kwargs.get('write_to_file', "").replace('"', '')
+    write_to_file = kwargs.get('write_to_file', "./sound_change/output.txt").replace('"', '')
 
     output = []
 
