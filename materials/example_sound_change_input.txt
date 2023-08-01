@@ -1,0 +1,59 @@
+# lines starting with '#' are comments
+# whitespace is ignored
+
+# This is an example for how input files should be formatted
+
+# lines with -> are interpreted as sound_changes (list[str])
+[sm]->/_#
+i->j/_V
+L->V/_
+e->/Vr_#
+v->/V_V
+u->o/_#
+gn->nh/_
+S->Z/V_V
+c->i/F_t
+c->u/B_t
+p->/V_t
+ii->i/_
+e->/C_rV
+
+# lines with = are interpreted as categories (dict[str, str])
+V=aeiou
+L=āēīōū
+C=ptcqbdgmnlrhs
+F=ie
+B=ou
+S=ptc
+Z=bdg
+
+# lines with // are interpreted as rewrite_rules (dict[str, str])
+lh//lj
+
+# lines with neither -> nor = nor // are words
+lector
+doctor
+focus
+jocus
+districtus
+cīvitatem
+adoptare
+opera
+secundus
+fīliam
+pōntem
+
+# lines beginning with * are interpreted as **kwargs
+# these are all of the keyword arguments that have so far been implemented
+# if nothing is input, the default values will be used. 
+# also, if False is misspelled, it will default to True! Be wary of that.
+*show_input=True
+*rewrite_on_output=True
+*report_rules=True
+# below works with or without the quotes, whichever you prefer
+*write_to_file="./materials/example_sound_change_output.txt"
+
+# these rules all mean that the following are banned characters except for where they belong. 
+# if you use them, things *will* break.
+    *, //, =, ->, (probably more)
+# just be smart about it
