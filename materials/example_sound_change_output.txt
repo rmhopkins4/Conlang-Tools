@@ -1,11 +1,41 @@
-leitor [lector] 
-doutor [doctor] 
-fogo [focus] 
-jogo [jocus] 
-distrito [districtus] 
-cidade [cīvitatem] 
-adotar [adoptare] 
-obra [opera] 
-segundo [secundus] 
-filha [fīliam] 
-ponte [pōntem] 
+c->i/F_t applies to lector at 2
+c->u/B_t applies to doctor at 2
+[sm]->/_# applies to focus at 4
+u->o/_# applies to focu at 3
+S->Z/V_V applies to foco at 2
+[sm]->/_# applies to jocus at 4
+u->o/_# applies to jocu at 3
+S->Z/V_V applies to joco at 2
+[sm]->/_# applies to districtus at 9
+u->o/_# applies to districtu at 8
+c->i/F_t applies to districto at 6
+ii->i/_ applies to distriito at 6
+[sm]->/_# applies to cīvitatem at 8
+L->V/_ applies to cīvitate at 1
+v->/V_V applies to civitate at 2
+S->Z/V_V applies to ciitate at 3
+ii->i/_ applies to ciidade at 2
+e->/Vr_# applies to adoptare at 7
+p->/V_t applies to adoptar at 3
+S->Z/V_V applies to opera at 1
+e->/C_rV applies to obera at 2
+[sm]->/_# applies to secundus at 7
+u->o/_# applies to secundu at 6
+S->Z/V_V applies to secundo at 2
+[sm]->/_# applies to fīliam at 5
+i->j/_V applies to fīlia at 3
+L->V/_ applies to fīlja at 1
+[sm]->/_# applies to pōntem at 5
+L->V/_ applies to pōnte at 1
+---
+lector
+doctor
+focus
+jocus
+districtus
+cīvitatem
+adoptare
+opera
+secundus
+fīliam
+pōntem

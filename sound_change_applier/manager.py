@@ -18,6 +18,8 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
     report_rules = kwargs.get('report_rules', False)
     write_to_file = kwargs.get('write_to_file', "").replace('"', '')
 
+    output = []
+
     # Rewrite sound changes once
     sound_changes = [rewrite(change, rewrite_rules)
                      for change in sound_changes]
@@ -56,7 +58,7 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
                 word, change, categories)
             if change_bool and report_rules:
                 # location of where old_word and new_word differ
-                print(
+                output.append(
                     f"{change} applies to {old_word} at {__first_different_index(old_word, word)}")
         return word
 
@@ -64,9 +66,11 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
                      for word in rewritten_word_list]
 
     if write_to_file:
+        output.append("---")
+        output.extend(word_list)
         try:
             with open(write_to_file, 'w', encoding='utf-8') as file:
-                file.writelines([item + '\n' for item in new_word_list])
+                file.writelines([item + '\n' for item in output])
 
             print(f"Written to file: {write_to_file}")
         except FileNotFoundError:

@@ -91,6 +91,8 @@ def apply_sound_change(input_string: str = "lector",
         replacement = replacement.replace(category, f'[{characters}]')
 
     pattern = __remove_nested_brackets(pattern)
+
+    # do replacement
     replaced = __replace_substring(
         input_string, target=target, replacement=replacement, pattern=pattern)
     return replaced, replaced != input_string
