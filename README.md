@@ -15,6 +15,10 @@ Simply provide words and define sound changes and the program will transform the
 
 #### How it Works
 
+Edit the following variables in [app.py](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/app.py) to use the program.
+
+A console version reading files is in the works.
+
 - `word_list` - list of words which will undergo sound changes. Simple enough.
 - `categories` - these act like variables, and can be used in the `word_list` or inside the `sound_changes`. Variables can only be one character long (unless rewrite rules are used).
 - `sound_changes` - defines what changes go on. Generally, a sound change looks like: _target->replacement/environment_
