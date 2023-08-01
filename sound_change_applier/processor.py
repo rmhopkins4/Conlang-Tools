@@ -34,9 +34,13 @@ def __replace_substring(input_string, target, replacement, pattern):
             replacement_list = re.findall(r'\[.*?\]|\S', replacement)
 
             def __match_func(match):
+                print(match)
                 return "".join([replacement[target.index(match.group()[0])] if len(replacement) > target.index(match.group()[0]) else replacement if not "[" in replacement else "" for replacement in replacement_list])
             result = re.sub(pattern_regex, __match_func, input_string)
     else:
+        def __match_func(match):
+            print(match)
+            return replacement
         result = re.sub(pattern_regex, replacement, input_string)
 
     # remove '#' that was added to start and end of string

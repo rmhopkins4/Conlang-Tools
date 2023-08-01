@@ -28,14 +28,14 @@ L->V/_ applies to fīlja at 1
 [sm]->/_# applies to pōntem at 5
 L->V/_ applies to pōnte at 1
 ---
-lector
-doctor
-focus
-jocus
-districtus
-cīvitatem
-adoptare
-opera
-secundus
-fīliam
-pōntem
+leitor [lector] 
+doutor [doctor] 
+fogo [focus] 
+jogo [jocus] 
+distrito [districtus] 
+cidade [cīvitatem] 
+adotar [adoptare] 
+obra [opera] 
+segundo [secundus] 
+filha [fīliam] 
+ponte [pōntem] 

@@ -67,7 +67,7 @@ def apply_sound_changes(word_list: list[str] = ["lector"], sound_changes: list[s
 
     if write_to_file:
         output.append("---")
-        output.extend(word_list)
+        output.extend(new_word_list)
         try:
             with open(write_to_file, 'w', encoding='utf-8') as file:
                 file.writelines([item + '\n' for item in output])
