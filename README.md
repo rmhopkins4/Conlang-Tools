@@ -34,7 +34,6 @@ A console version reading files is in the works.
 - `rewrite_on_output` - Defaults to true. When true, output is rewritten back to original. When false, rewriting only goes one way.
 - `report_rules` - Defaults to false. When true, prints out what rules apply to which words and where.
 
----
 
 ## Phonology Creator
 
