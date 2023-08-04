@@ -15,6 +15,7 @@ Or, you can run [console_app.py](https://github.com/rmhopkins4/Conlang-Tools/blo
 |-----------------|----------------------------------------------|
 | Categories      | (variable) = (list of values)                |
 | Syllable Types  | (raw type)                                   |
+| Syllable Counts | (number) : (likelihood)                       |
 | Rewrite Rule    | (original) // (replacement)                  |
 | Comments        | # (comment)                                  |
 
