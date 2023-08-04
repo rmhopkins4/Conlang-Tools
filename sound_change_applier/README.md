@@ -9,7 +9,15 @@ Simply provide words and define sound changes and the program will transform the
 
 Edit the following variables in [app.py](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/app.py) to use the program.
 
-Or, you can run [console_app.py](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/console_app.py), submitting a file following the [example_file](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/materials/example_input.txt)'s format.
+Or, you can run [console_app.py](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/console_app.py), submitting a file following the [example_file](https://github.com/rmhopkins4/Conlang-Tools/blob/main/sound_change_applier/materials/example_input.txt)'s format which is summarized briefly below. 
+| Concept         | Format                                       |
+|-----------------|----------------------------------------------|
+| Sound Changes   | (target) -> (replacement) / (environment)    |
+| Categories      | (variable) = (list of values)                |
+| Rewrite Rule    | (original) // (replacement)                  |
+| Input Lexicon   | (raw word)                                   |
+| Comments        | # (comment)
+
 
 - `word_list` - list of words which will undergo sound changes. Simple enough.
 - `categories` - these act like variables, and can be used in the `word_list` or inside the `sound_changes`. Variables can only be one character long (unless rewrite rules are used).
