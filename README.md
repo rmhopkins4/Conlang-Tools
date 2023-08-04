@@ -5,6 +5,7 @@ I like to design constructed languages, or conlangs, so I decided to make some t
 ## Language Text Generator
 
 Partially complete, pending premade options, sentence/corpus building, and of course, bug fixes
+
 A version using the console and files as input is on the way, to make sure it is not necessary to open a python editor :)
 
 ## Sound Change Applier
