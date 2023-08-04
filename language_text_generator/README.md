@@ -1,6 +1,6 @@
 # Language Text Generator
 
-Mostly complete, pending thorough testing and continued bug fixes.
+Console app TBD
 
 The purpose of this tool is to simulate sound changes that would occur over many many years, instantly!
 Simply provide words and define sound changes and the program will transform the lexicon.
