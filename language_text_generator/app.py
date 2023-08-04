@@ -1,5 +1,4 @@
 import random
-from collections import Counter
 import re
 
 # generate a word
@@ -50,7 +49,7 @@ def _get_char_helper(characters: str, character_dropoff: float) -> str:
         return _get_char_helper(characters[1:], character_dropoff)
 
 
-def _char_retrieval(key, character_dropoff):
+def _char_retrieval(key, character_dropoff, categories):
     if key not in list(categories.keys()):
         return key
     characters = categories.get(key)
@@ -61,22 +60,34 @@ def _char_retrieval(key, character_dropoff):
     return char
 
 
-def generate_word(syllables: list[str], syllable_selection_dropoff: float, syllable_count_dropoff: float,
-                  categories: dict[str, str], character_dropoff: float, rewrite: dict[str, str]):
+def choose_random_syllables(syllable_counts):
+    total_probability = sum(syllable_counts.values())
 
-    # would generate infinitely long words! No can do.
-    if syllable_count_dropoff == 0:
-        return None
-    num_syllables = 1
-    while random.random() >= syllable_count_dropoff:
-        num_syllables += 1
+    # Normalize probabilities
+    normalized_probabilities = {
+        count: probability / total_probability for count, probability in syllable_counts.items()}
+
+    # Create a list of syllable counts based on the normalized probabilities
+    options = list(normalized_probabilities.keys())
+    probabilities = list(normalized_probabilities.values())
+
+    # Choose a random option based on the normalized probabilities
+    chosen_option = random.choices(options, probabilities)[0]
+    return chosen_option
+
+
+def generate_word(syllables: list[str], syllable_selection_dropoff: float, syllable_counts: dict[int, float],
+                  categories: dict[str, str], character_dropoff: float,
+                  rewrite: dict[str, str]):
+
+    num_syllables = choose_random_syllables(syllable_counts)
 
     # get multiple syllables
     syllable_template = "".join([_syllable_retrieval(syllables, syllable_selection_dropoff)
                                  for _ in range(num_syllables)])
 
     # get the characters for each letter in the syllable
-    word = "".join([_char_retrieval(char, character_dropoff)
+    word = "".join([_char_retrieval(char, character_dropoff, categories)
                    for char in syllable_template])
 
     # now rewrite
@@ -86,6 +97,7 @@ def generate_word(syllables: list[str], syllable_selection_dropoff: float, sylla
 
 
 # user input
+
 character_dropoff = .30  # higher -> more likely to pick earlier letters
 categories = {  # earlier character -> more likely
     "C": "ptkbdg",
@@ -100,8 +112,7 @@ syllable_types = [  # earlier -> more likely
     "CRV",
 ]
 
-syllable_count_dropoff = .40  # higher -> more likely to pick fewer syllables
-syllable_counts = {
+syllable_counts = {  # syllable_count: likelihood of syllable (sum does not need to be 1)
     2: 0.4,
     1: 0.2,
     3: 0.2,
@@ -110,14 +121,14 @@ syllable_counts = {
     6: 0.05,
 }
 
-rewrite_rules = {
+rewrite_rules = {  # rewrite rules are done in order. if rewrites turn out weird, try changing the order. (they might feed into eachother unexpectedly)
     "ki": "či"
 }
 
 # generate sentence
 standard_sentence = " ".join([generate_word(syllables=syllable_types,
                                             syllable_selection_dropoff=syllable_selection_dropoff,
-                                            syllable_count_dropoff=syllable_count_dropoff,
+                                            syllable_counts=syllable_counts,
                                             categories=categories,
                                             character_dropoff=character_dropoff,
                                             rewrite=rewrite_rules
