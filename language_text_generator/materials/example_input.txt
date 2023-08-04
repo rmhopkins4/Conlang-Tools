@@ -1,0 +1,50 @@
+# Example input! Study this to make sure you understand the input format when using the console_app.
+
+# lines starting with '#' are comments
+# whitespace is ignored
+
+# This is an example for how input files should be formatted
+
+# lines with = are interpreted as categories (dict[str, str])
+
+C=ptkbdg
+R=rl
+V=ieaou
+
+
+# lines with // are interpreted as rewrite_rules (dict[str, str])
+
+ki//či
+
+
+# lines with : are interpreted as syllable_count lines (dict[int, float])
+# (sum does not have to equal one, probabilities are normalized)
+
+2: 0.4
+1: 0.2
+3: 0.2
+4: 0.1
+5: 0.05
+6: 0.05
+
+
+# lines with neither : nor = nor // are interpreted as input syllable types 
+
+CV
+V
+CRV
+
+
+# lines beginning with * are interpreted as keyword arguments, and act as options
+# there may be more implemented down the line, but these four seem fairly important and good
+# if nothing is input, the default values will be used. 
+# if False is misspelled, it will default to True! Be wary of that.
+# quotes are optional for value of *write_to_file, it's up to you whether or not to use them.
+
+*
+
+
+# these rules all mean that the following are banned characters except for where they belong. 
+# if you use them, things *will* break.
+#   '#', '*', '//', '=', ':', etc. (probably more)
+# just be smart about it
