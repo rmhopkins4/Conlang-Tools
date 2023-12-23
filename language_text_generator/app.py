@@ -116,7 +116,6 @@ syllable_counts = {  # syllable_count: likelihood of syllable (sum does not need
     2: 1.0,
     1: 0.4,
     3: 0.6,
-    4: 0.2,
 }
 
 # rewrite rules are done in order. if rewrites turn out weird, try changing the order.
