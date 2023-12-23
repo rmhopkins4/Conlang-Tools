@@ -90,40 +90,44 @@ def generate_word(syllables: list[str], syllable_selection_dropoff: float, sylla
     word = "".join([_char_retrieval(char, character_dropoff, categories)
                    for char in syllable_template])
 
-    # now rewrite
+    # now rewrite (simple, does not cover categories yet)
     for target, replacement in rewrite.items():
         word = re.sub(target, replacement, word)
     return word
 
 
 # user input
-character_dropoff = .30  # higher -> more likely to pick earlier letters
+character_dropoff = .04  # higher -> more likely to pick earlier letters
 categories = {  # earlier character -> more likely
-    "C": "pbtdŋkqɸβʃxjl",
-    "V": "ieäoɯ",
+    "C": "qpxtɸdlkbʃβj",
+    "V": "ioɯäe",
+    "N": "nŋ",
 }
 
 syllable_selection_dropoff = .50  # higher -> more likely to pick earlier syllables
 syllable_types = [  # earlier -> more likely
     "CVC",
-    "CV",
+    "CVCN",
     "V",
-    "VC",
-    "CCVC",
-    "CVCC",
-    "CCVCC",
+    "VN",
 ]
 
 syllable_counts = {  # syllable_count: likelihood of syllable (sum does not need to be 1)
     2: 1.0,
-    1: 0.8,
+    1: 0.4,
     3: 0.6,
     4: 0.2,
 }
 
-rewrite_rules = {  # rewrite rules are done in order. if rewrites turn out weird, try changing the order. (they might feed into eachother unexpectedly)
-    "ki": "či"
+# rewrite rules are done in order. if rewrites turn out weird, try changing the order.
+# they might feed into eachother unexpectedly via counter-feeding, or
+# prevent each otherother from occurring via counter-bleeding! Be careful.
+# This tool is not meant for phonological shifts. For that, see /sound_change_applier !
+rewrite_rules = {
+
 }
+
+num_words = 10
 
 # generate sentence
 standard_sentence = " ".join([generate_word(syllables=syllable_types,
@@ -132,6 +136,6 @@ standard_sentence = " ".join([generate_word(syllables=syllable_types,
                                             categories=categories,
                                             character_dropoff=character_dropoff,
                                             rewrite=rewrite_rules
-                                            ) for _ in range(10)])
+                                            ) for _ in range(num_words)])
 
 print(standard_sentence)
