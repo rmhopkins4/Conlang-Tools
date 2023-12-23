@@ -97,25 +97,26 @@ def generate_word(syllables: list[str], syllable_selection_dropoff: float, sylla
 
 
 # user input
-character_dropoff = .04  # higher -> more likely to pick earlier letters
+character_dropoff = .1  # higher -> more likely to pick earlier letters
 categories = {  # earlier character -> more likely
-    "C": "qpxtɸdlkbʃβj",
+    "F": "xʃɸβ",
+    "P": "ptqkbd",
     "V": "ioɯäe",
     "N": "nŋ",
 }
 
-syllable_selection_dropoff = .50  # higher -> more likely to pick earlier syllables
+syllable_selection_dropoff = .25  # higher -> more likely to pick earlier syllables
 syllable_types = [  # earlier -> more likely
-    "CVC",
-    "CVCN",
-    "V",
+    "FNPVF",
+    "VF",
     "VN",
+    "VPN"
 ]
 
 syllable_counts = {  # syllable_count: likelihood of syllable (sum does not need to be 1)
     2: 1.0,
     1: 0.4,
-    3: 0.6,
+    3: 0.2,
 }
 
 # rewrite rules are done in order. if rewrites turn out weird, try changing the order.

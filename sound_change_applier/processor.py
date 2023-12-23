@@ -109,7 +109,7 @@ def apply_sound_change(input_string: str = "lector",
 if __name__ == "__main__":
 
     # define categories
-    __default_categories = {
+    _default_categories = {
         "V": "aeiou",
         "L": "āēīōū",
         "C": "ptcqbdgmnlrhs",
@@ -124,5 +124,5 @@ if __name__ == "__main__":
     input_string = "bbb"
     sound_change = "b->d/_"
     result = apply_sound_change(
-        input_string, sound_change, __default_categories)
+        input_string, sound_change, _default_categories)
     print(result)
