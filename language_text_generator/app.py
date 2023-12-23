@@ -97,7 +97,6 @@ def generate_word(syllables: list[str], syllable_selection_dropoff: float, sylla
 
 
 # user input
-
 character_dropoff = .30  # higher -> more likely to pick earlier letters
 categories = {  # earlier character -> more likely
     "C": "ptkbdg",
